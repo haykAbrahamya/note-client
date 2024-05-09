@@ -1,0 +1,38 @@
+.input-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	align-items: flex-start;
+	position: relative;
+
+	.placeholder {
+		position: absolute;
+		background-color: #fff;
+		top: -7px;
+		padding: 1px 5px;
+		left: 5px;
+		font-size: 12px;
+		color: var(--secondary);
+	}
+
+	span {
+		color: red;
+		font-size: 13px;
+		font-weight: 600;
+	}
+
+	input {
+		padding: 14px;
+		border: 1px solid #cecece;
+		border-radius: 8px;
+		font-size: 16px;
+		width: calc(100% - 28px);
+		transition: border 0.4s ease;
+		outline: none;
+
+		&:hover,
+		&:focus {
+			border-color: var(--main-color);
+		}
+	}
+}

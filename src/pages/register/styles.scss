@@ -1,0 +1,15 @@
+.auth-page-container {
+	display: flex;
+
+	.image-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+		background: var(--main-color);
+	}
+
+	.auth-form-container {
+		flex: 1;
+	}
+}

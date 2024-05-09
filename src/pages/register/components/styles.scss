@@ -1,0 +1,19 @@
+.auth-form-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	.sub-title {
+		font-size: 20px;
+		margin-top: 24px;
+	}
+
+	.form-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		margin-top: 48px;
+		width: 488px;
+	}
+}

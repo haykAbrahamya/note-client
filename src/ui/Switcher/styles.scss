@@ -1,0 +1,31 @@
+.switcher-container {
+	display: flex;
+	border-radius: 34px;
+	transition: all 0.3s ease;
+	padding: 3px 5px;
+	width: 38px;
+	height: 20px;
+	background-color: #ccc;
+	cursor: pointer;
+	position: relative;
+
+	&.active {
+		justify-content: flex-end;
+		background-color: var(--main-color);
+
+		.circle {
+			left: calc(100% - 22px);
+		}
+	}
+
+	.circle {
+		transition: all 0.3s ease;
+		position: absolute;
+		width: 18px;
+		height: 18px;
+		left: 4px;
+		top: 4.5px;
+		border-radius: 50%;
+		background: #fff;
+	}
+}

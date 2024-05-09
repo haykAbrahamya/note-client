@@ -1,0 +1,23 @@
+.button-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 14px;
+	background-color: var(--main-color);
+	color: #fff;
+	font-weight: 600;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	user-select: none;
+
+	&:hover {
+		background-color: #7460f0;
+	}
+
+	&.outline {
+		border: 2px solid var(--main-color);
+		color: var(--secondary);
+		background-color: #fff;
+	}
+}

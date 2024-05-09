@@ -1,0 +1,129 @@
+.layout-container {
+	display: flex;
+
+	.sidebar-container {
+		display: flex;
+		flex-direction: column;
+		width: 300px;
+		height: 100%;
+		box-shadow: 0px 4px 16px 0px #0000002b;
+
+		.logo-wrapper {
+			padding: 34px 0px;
+			border-bottom: 1px solid #d9d9d9;
+			min-height: 42.2px;
+
+			svg {
+				width: 190px;
+			}
+		}
+
+		.sidebar-footer {
+			display: flex;
+			padding: 34px 28px;
+			color: var(--secondary);
+			font-size: 18px;
+
+			span {
+				cursor: pointer;
+			}
+		}
+
+		.sidebar-content {
+			flex: 1;
+
+			.items-list {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				padding: 38px 16px;
+
+				.sidebar-item {
+					display: flex;
+					color: var(--secondary);
+					padding: 10px 12px;
+					cursor: pointer;
+					border-radius: 4px;
+					font-size: 18px;
+					transition: all 0.5s ease;
+
+					&.active,
+					&:hover {
+						background: #f5f5f5;
+					}
+				}
+			}
+		}
+	}
+
+	.page-content {
+		flex: 1;
+	}
+}
+
+.page-container {
+	height: 100%;
+	overflow: hidden;
+
+	.page-inner-wrapper {
+		padding: 40px;
+		overflow-y: auto;
+		height: calc(100% - 80px - 111px);
+	}
+
+	.page-header {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		height: 111px;
+		width: calc(100% - 60px);
+		padding: 0px 30px;
+	}
+
+	.button-wrapper {
+		width: 300px;
+	}
+
+	.papers-list {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+
+		.paper-card {
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			width: 350px;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+			.card-header {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				gap: 10px;
+				margin-bottom: 5px;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+				padding-bottom: 15px;
+
+				svg {
+					cursor: pointer;
+					width: 25px;
+				}
+			}
+
+			.info-row {
+				display: flex;
+				justify-content: space-between;
+
+				img {
+					width: 100%;
+					border-radius: 20px;
+					height: 300px;
+				}
+			}
+		}
+	}
+}
