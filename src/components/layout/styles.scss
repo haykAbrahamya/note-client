@@ -98,6 +98,7 @@
 			padding: 20px;
 			border-radius: 8px;
 			box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+			cursor: pointer;
 
 			.card-header {
 				display: flex;
@@ -107,6 +108,18 @@
 				margin-bottom: 5px;
 				border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 				padding-bottom: 15px;
+
+				&.pending {
+					color: #fcba03;
+				}
+
+				&.accepted {
+					color: green;
+				}
+
+				&.rejected {
+					color: red;
+				}
 
 				svg {
 					cursor: pointer;

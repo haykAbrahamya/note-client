@@ -10,15 +10,23 @@ import { toast } from 'react-toastify';
 import { SUCCESS_MESSAGE } from 'constants/messages';
 import { ReactComponent as DeleteIcon } from 'images/delete.svg';
 
+const orderStatuses = {
+	pending: 'Ընթացքի մեջ է',
+	accepted: 'Հաստատված է',
+	rejected: 'Մերվժած է',
+};
+
 export const OrdersPage = () => {
 	const [ordersList, setOrdersList] = useState([]);
 	const [isFormOpen, setIsFormOpen] = useState(false);
 	const editableOrderIndex = useRef(null);
+	const [viewModeOrderIndex, setViewModeOrderIndex] =
+		useState(false);
 
 	const loadOrdersList = async () => {
 		try {
-			const res = await HttpService.get('/paper');
-			setOrdersList(res.papers);
+			const res = await HttpService.get('/order');
+			setOrdersList(res.orders);
 		} catch (ex) {}
 	};
 
@@ -26,64 +34,38 @@ export const OrdersPage = () => {
 		loadOrdersList();
 	}, []);
 
-	const handleUpdateOrderClick = ind => {
-		editableOrderIndex.current = ind;
-		setIsFormOpen(true);
-	};
-
 	const handleCreateOrderclick = () => setIsFormOpen(true);
 
 	const onCloseForm = () => {
 		setIsFormOpen(false);
+		setViewModeOrderIndex();
 		editableOrderIndex.current = null;
 	};
 
-	const addOrder = async data => {
+	const createOrder = async data => {
 		try {
 			const res = await HttpService.post('/order', data);
-
 			if (res.isSuccess) {
+				toast.success('Պատվերը ստեղծվեց');
+				onCloseForm();
 				loadOrdersList();
-				onCloseForm();
-				toast.success(SUCCESS_MESSAGE);
 			}
 		} catch (ex) {}
 	};
 
-	const updateOrder = async data => {
-		try {
-			const res = await HttpService.put(
-				`/order/${data._id}`,
-				data
-			);
-
-			if (res.isSuccess) {
-				setOrdersList(
-					ordersList.map(order => {
-						if (order._id === data._id) return data;
-
-						return order;
-					})
-				);
-
-				onCloseForm();
-				toast.success(SUCCESS_MESSAGE);
-			}
-		} catch (ex) {}
-	};
-
-	const deleteOrder = async orderId => {
-		try {
-			const res = await HttpService.delete(
-				`/order/${orderId}`
-			);
-
-			if (res.isSuccess) {
-				setOrdersList(
-					ordersList.filter(order => order._id !== orderId)
-				);
-			}
-		} catch (ex) {}
+	const formatViewModeOrder = order => {
+		return {
+			...order,
+			cover: {
+				templateId: order.cover.templateId._id,
+				id: order.cover.id._id,
+			},
+			templates: order.templates.map(template => ({
+				...template,
+				paperId: template.paperId._id,
+				templateId: template.templateId._id,
+			})),
+		};
 	};
 
 	return (
@@ -91,14 +73,14 @@ export const OrdersPage = () => {
 			{isFormOpen && (
 				<OrderForm
 					onClose={onCloseForm}
+					viewMode={viewModeOrderIndex}
 					editableData={
-						ordersList[editableOrderIndex.current]
+						viewModeOrderIndex &&
+						formatViewModeOrder(
+							ordersList[viewModeOrderIndex]
+						)
 					}
-					handleSubmit={
-						editableOrderIndex.current !== null
-							? updateOrder
-							: addOrder
-					}
+					handleSubmit={createOrder}
 				/>
 			)}
 			<div className='page-container'>
@@ -110,34 +92,22 @@ export const OrdersPage = () => {
 				<div className='page-inner-wrapper'>
 					<div className='papers-list'>
 						{ordersList.map((order, ind) => (
-							<div key={order._id} className='paper-card'>
-								<div className='card-header'>
-									<EditIcon
-										color='#cdcf48'
-										onClick={() =>
-											handleUpdateOrderClick(ind)
-										}
-									/>
-									<DeleteIcon
-										fill='red'
-										onClick={() => deleteOrder(order._id)}
-									/>
-								</div>
-								<div className='info-row'>
-									<span>Չափս</span>
-									<span>{order.type}</span>
+							<div
+								key={order._id}
+								className='paper-card'
+								onClick={() => {
+									setViewModeOrderIndex(ind);
+									setIsFormOpen(true);
+								}}
+							>
+								<div
+									className={`card-header ${order.status}`}
+								>
+									{orderStatuses[order.status]}
 								</div>
 								<div className='info-row'>
 									<span>Գին</span>
 									<span>{order.price}</span>
-								</div>
-								<div className='info-row'>
-									<span>Երկարություն</span>
-									<span>{order.width}</span>
-								</div>
-								<div className='info-row'>
-									<span>Լայնություն</span>
-									<span>{order.height}</span>
 								</div>
 							</div>
 						))}

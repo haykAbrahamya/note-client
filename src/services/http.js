@@ -5,7 +5,7 @@ class HttpService {
 
 	static getHeaders(withoutJson) {
 		const headers = {};
-		const token = localStorage.getItem('token');
+		const token = localStorage.getItem('authToken');
 
 		if (!withoutJson)
 			headers['Content-Type'] = 'application/json';

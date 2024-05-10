@@ -7,21 +7,32 @@ export const Select = ({
 	options,
 	placeholder,
 	onChange,
+	disabled,
+	value,
+	...rest
 }) => {
 	return (
 		<div className='select-container'>
+			{value && (
+				<div className='placeholder'>{placeholder}</div>
+			)}
 			<ReactSelect
 				options={options}
+				isDisabled={disabled}
 				placeholder={placeholder}
-				onChange={data => console.log(data)}
+				value={options.find(item => item.value === value)}
+				onChange={onChange}
 				styles={{
 					control: (baseStyles, state) => ({
 						...baseStyles,
 						textAlign: 'start',
+						minHeight: '48px',
+						borderRadius: '8px',
 					}),
 					menu: (baseStyles, state) => ({
 						...baseStyles,
 						padding: '5px',
+						zIndex: 3,
 					}),
 					option: (baseStyles, state) => ({
 						...baseStyles,
@@ -33,6 +44,7 @@ export const Select = ({
 						padding: '5px',
 					}),
 				}}
+				{...rest}
 			/>
 		</div>
 	);

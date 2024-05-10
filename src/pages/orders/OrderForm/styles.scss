@@ -11,13 +11,86 @@
 	align-items: center;
 
 	.form-container {
-		width: 400px;
+		width: calc(100% - 40px);
+		height: calc(100% - 40px);
 		padding: 20px;
 		background-color: #fff;
 		border-radius: 20px;
 		display: flex;
 		flex-direction: column;
 		gap: 15px;
+
+		.form-content {
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			flex: 1;
+			overflow-y: auto;
+			overflow-x: hidden;
+
+			.form-part {
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+				width: 100%;
+
+				.button-wrapper {
+					max-width: 250px;
+					// margin: 0 auto;
+					margin-left: 20px;
+				}
+
+				span {
+					width: max-content;
+					font-size: 20px;
+				}
+
+				.form-part-fields {
+					display: flex;
+					gap: 20px;
+					width: calc(100% - 20px);
+					margin-left: 20px;
+					align-items: center;
+
+					&.templates {
+						// flex-direction: column;
+						align-items: flex-start;
+						flex-wrap: wrap;
+						gap: 30px;
+					}
+
+					.pages-template-container {
+						display: flex;
+						gap: 20px;
+
+						.fields-list-wrapper {
+							display: flex;
+							gap: 20px;
+							flex-direction: column;
+						}
+
+						img {
+							border-radius: 12px;
+							width: 250px;
+							height: 250px;
+						}
+					}
+
+					.input-wrapper,
+					.select-container {
+						width: 300px;
+					}
+				}
+			}
+		}
+
+		// .input-wrapper {
+		// 	max-width: 300px;
+		// }
+
+		// .select-container {
+		// 	max-width: 300px;
+		// }
 
 		.form-header {
 			display: flex;
