@@ -26,12 +26,13 @@ const initialValues = {
 			colorsCount: '', // 2 || 4
 		},
 	],
+	orderCount: 1,
 	price: '', // calculate here and send to the api
 };
 
 const colorPrices = {
-	2: 3000,
-	4: 4000,
+	2: 30,
+	4: 40,
 };
 
 /*
@@ -66,7 +67,6 @@ export const OrderForm = ({
 	editableData,
 	handleSubmit,
 }) => {
-	console.log(editableData, 'sdffd');
 	const [formData, setFormData] = useState(
 		editableData || initialValues
 	);
@@ -83,25 +83,31 @@ export const OrderForm = ({
 			const cover = lists.covers.find(
 				item => item._id === formData.cover.id
 			);
-			console.log(cover, 'cover');
+
 			formData.templates.forEach(template => {
 				const paper = lists.papers.find(
 					item => item._id === template.paperId
 				);
 				templatesPrice +=
-					(paper.price /
-						((paper.width / formData.dimensions.height) *
-							((paper.height * 1000) /
-								formData.dimensions.width)) +
-						((colorPrices[template.colorsCount] *
-							formData.dimensions.height *
-							formData.dimensions.width) /
-							1000) *
-							1000) *
-					template.pageCount;
+					paper.price * template.pageCount +
+					template.pageCount *
+						colorPrices[template.colorsCount];
+				// templatesPrice +=
+				// 	(paper.price /
+				// 		((paper.width / formData.dimensions.height) *
+				// 			((paper.height * 1000) /
+				// 				formData.dimensions.width)) +
+				// 		((colorPrices[template.colorsCount] *
+				// 			formData.dimensions.height *
+				// 			formData.dimensions.width) /
+				// 			1000) *
+				// 			1000) *
+				// 	template.pageCount;
 			});
+
 			const finalPrice = (
 				(templatesPrice + cover.price) *
+				formData.orderCount *
 				1.2
 			).toFixed(0);
 			return isNaN(finalPrice) ? 0 : finalPrice;
@@ -149,7 +155,6 @@ export const OrderForm = ({
 	useEffect(() => {
 		loadLists();
 	}, []);
-	console.log(lists, 'lists');
 
 	const onSubmit = () => {
 		handleSubmit({ ...formData, price });
@@ -194,6 +199,22 @@ export const OrderForm = ({
 			>
 				<div className='form-header'>{formType} պատվեր</div>
 				<div className='form-content'>
+					<div className='form-part'>
+						<span>Բլոկնոտ</span>
+						<div className='form-part-fields'>
+							<Input
+								type='number'
+								value={formData.orderCount}
+								placeholder='Քանակ'
+								onChange={val =>
+									setFormData({
+										...formData,
+										orderCount: val,
+									})
+								}
+							/>
+						</div>
+					</div>
 					<div className='form-part'>
 						<span>Կազմի նկարագրություն</span>
 						<div className='form-part-fields'>

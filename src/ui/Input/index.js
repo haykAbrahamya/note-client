@@ -10,7 +10,7 @@ export const Input = ({
 	...rest
 }) => {
 	const handleChange = e =>
-		onChange(e.target.value, e.target.name);
+		onChange?.(e.target.value, e.target.name);
 
 	return (
 		<div className='input-wrapper'>
